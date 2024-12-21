@@ -126,8 +126,4 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    public function actionTest()
-    {
-        var_dump('1111111');die();
-    }
 }
