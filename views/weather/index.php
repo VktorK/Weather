@@ -10,7 +10,7 @@ $this->title = 'Weather list';
 
     <div class="jumbotron text-center bg-transparent mt-5 mb-5">
         <h1 class="display-4">Weather list</h1>
-
+        <?= Html::a('Создать заявку', ['create'], ['class' => 'btn btn-primary'])?>
         <table class="table table-hover">
                 <thead>
                 <tr>
@@ -47,9 +47,9 @@ $this->title = 'Weather list';
                                 ],
                             ]) ?></td>
                 </tr>
-
                 </tbody>
         </table>
+        <?= Html::a('Обновить', ['update', 'id' => $weather->id], ['class' => 'btn btn-primary'])?>
         <?php endforeach; ?>
         <?php endif; ?>
     </div>
