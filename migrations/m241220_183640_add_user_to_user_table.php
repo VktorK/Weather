@@ -14,7 +14,7 @@ class m241220_183640_add_user_to_user_table extends Migration
     {
         $this->batchInsert('{{%user}}', ['email', 'password'],
             [
-                ['VktorK@mail.ru','123321123']
+                ['user@user','1']
             ]);
     }
 

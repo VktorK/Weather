@@ -26,22 +26,26 @@ class WeatherController extends Controller
 
     public function actionDestroy($id)
     {
-        $weather = Weather::find()->where(['id' => $id])->one();
-        $weather->delete();
+        Weather::findOne($id)->delete();
         return $this->redirect(['index']);
     }
 
     public function actionView($id)
     {
         $weather = Weather::find()->where(['id'=>$id])->one();
-//        echo '<pre>';var_dump($weather);echo '<pre>';die();
+        $weather->date_bying = Yii::$app->formatter->asDate($weather->date_bying, 'php:d-m-Y');
+        $weather->date_end_warranty = Yii::$app->formatter->asDate($weather->date_end_warranty, 'php:d-m-Y');
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'weather' => $weather,
         ]);
     }
 
     public function actionCreate()
     {
+        if(Yii::$app->user->isGuest)
+        {
+            return $this->redirect(['/site/login']);
+        }
         $weather = new Weather();
 
         if ($this->request->isPost) {

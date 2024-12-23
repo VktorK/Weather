@@ -58,11 +58,12 @@ class Weather extends ActiveRecord
             [
                 'class' => TimestampBehavior::class,
                 'attributes' => [
-                    BaseActiveRecord::EVENT_BEFORE_INSERT => [['updated_at','created_at' => new Expression('NOW()')],
-                    BaseActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at' => new Expression('NOW()')],
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
-                ]
-            ]];
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
+        ];
     }
     public static function tableName(): string
     {
@@ -72,6 +73,12 @@ class Weather extends ActiveRecord
     public function saveWeather()
     {
         $this->user_id = Yii::$app->user->id;
+        $date_bying = \DateTime::createFromFormat('Y-m-d', $this->date_bying);
+        if ($date_bying) {
+            $date_bying->modify('+2 years');
+            $this->date_end_warranty = $date_bying->format('Y-m-d');
+        }
+
         return $this->save(false);
     }
 

@@ -15,14 +15,14 @@ $this->title = 'Weather list';
                 <thead>
                 <tr>
                     <th scope="col">id</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Weather Photo</th>
-                    <th scope="col">Check Photo</th>
-                    <th scope="col">Date of buying</th>
-                    <th scope="col">Date of end warranty</th>
-                    <th scope="col">Update</th>
-                    <th scope="col">Delete</th>
+                    <th scope="col">Описание товара</th>
+                    <th scope="col">Цена</th>
+                    <th scope="col">Фото товара</th>
+                    <th scope="col">Фото чека</th>
+                    <th scope="col">Дата покупки</th>
+                    <th scope="col">Дата окончания гарантии</th>
+                    <th scope="col">Обновить</th>
+                    <th scope="col">Удалить</th>
                 </tr>
                 </thead>
                 <?php if(count($weathers) === 0) : ?>
@@ -36,8 +36,8 @@ $this->title = 'Weather list';
                     <td><?= $weather->price ?></td>
                     <td><?= is_null($weather->weather_photo) ? 'Фото товара не загружено' : $weather->weather_photo ?></td>
                     <td><?= is_null($weather->check_photo) ? 'Фото чека не загружено' : $weather->check_photo ?></td>
-                    <td><?= is_null($weather->date_bying) ? 'Дата покупки не установлена' : $weather->date_bying ?></td>
-                    <td><?= is_null($weather->date_end_warranty) ? 'Дата окончания гарантии не установлена' : $weather->date_end_warranty ?></td>
+                    <td><?= is_null($weather->date_bying) ? 'Дата покупки не установлена' : Yii::$app->formatter->asDate($weather->date_bying, 'php:d-m-Y') ?></td>
+                    <td><?= is_null($weather->date_end_warranty) ? 'Дата окончания гарантии не установлена' : Yii::$app->formatter->asDate($weather->date_end_warranty, 'php:d-m-Y') ?></td>
                         <td><?= Html::a('Обновить', ['update', 'id' => $weather->id], ['class' => 'btn btn-primary'])?></td>
                         <td><?= Html::a('Удалить', ['destroy', 'id' => $weather->id], [
                                 'class' => 'btn btn-danger',
@@ -49,7 +49,6 @@ $this->title = 'Weather list';
                 </tr>
                 </tbody>
         </table>
-        <?= Html::a('Обновить', ['update', 'id' => $weather->id], ['class' => 'btn btn-primary'])?>
         <?php endforeach; ?>
         <?php endif; ?>
     </div>
