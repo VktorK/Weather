@@ -16,13 +16,13 @@ class m241220_182059_create_weather_table extends Migration
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
             'price'=> $this->float()->notNull(),
-            'weather_photo' => $this->string()->null()->defaultValue(null),
-            'check_photo' => $this->string()->null()->defaultValue(null),
-            "date_bying" => $this->date()->null()->defaultValue(null),
-            'date_end_warranty' => $this->date()->null()->defaultValue(null),
+            'weather_photo' => $this->string()->defaultValue(null),
+            'check_photo' => $this->string()->defaultValue(null),
+            "date_bying" => $this->date()->null(),
+            'date_end_warranty' => $this->date()->null(),
             'user_id' => $this->integer()->notNull(),
-            'updated_at' => $this->timestamp()->null(),
-            'created_at' => $this->timestamp()->null(),
+            'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
+            'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
         ]);
 
         $this->addForeignKey(

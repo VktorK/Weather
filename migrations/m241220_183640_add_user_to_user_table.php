@@ -12,9 +12,9 @@ class m241220_183640_add_user_to_user_table extends Migration
      */
     public function safeUp()
     {
-        $this->batchInsert('{{%user}}', ['email', 'password'],
+        $this->batchInsert('{{%user}}', ['email', 'password','role'],
             [
-                ['user@user','1']
+                ['user@user','1','user']
             ]);
     }
 

@@ -3,14 +3,19 @@
 namespace app\controllers;
 
 use app\models\Weather;
+use Services\WeatherService;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 class WeatherController extends Controller
 {
-
-
+//    protected WeatherService $weatherService;
+//    public function __construct(WeatherService $weatherService)
+//    {
+//        $this->weatherService = $weatherService;
+//
+//    }
     public function actionIndex()
     {
 

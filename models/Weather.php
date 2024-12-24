@@ -5,8 +5,7 @@ namespace app\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use yii\db\BaseActiveRecord;
-use yii\db\Expression;
+
 
 /**
  * This is the model class for table "weather".
@@ -29,9 +28,9 @@ class Weather extends ActiveRecord
         return [
             [['title', 'price'], 'required'],
             [['title','weather_photo','check_photo'], 'string'],
-            [['date_bying'],'date','format'=>'yyyy-MM-dd'],
-            [['date_end_warranty'],'date','format'=>'yyyy-MM-dd'],
+            [['date_bying','date_end_warranty'],'date','format'=>'yyyy-MM-dd'],
             [['title'], 'string', 'max' => 100],
+            [['weather_photo','check_photo','date_bying','date_end_warranty'],'safe'],
         ];
     }
 
@@ -70,16 +69,35 @@ class Weather extends ActiveRecord
         return 'weather';
     }
 
-    public function saveWeather()
+    public function saveWeather(): bool
     {
         $this->user_id = Yii::$app->user->id;
+        $this->dateOfByingFormated();
+        $this->checkPhotoNullable();
+        $this->weatherPhotoNullable();
+        return $this->save(false);
+    }
+
+    public function dateOfByingFormated(): ?string
+    {
         $date_bying = \DateTime::createFromFormat('Y-m-d', $this->date_bying);
         if ($date_bying) {
             $date_bying->modify('+2 years');
             $this->date_end_warranty = $date_bying->format('Y-m-d');
+            return $this->date_end_warranty;
         }
+        return null;
+    }
 
-        return $this->save(false);
+    public function weatherPhotoNullable(): ?string
+    {
+       $this->weather_photo = $this->weather_photo ? $this->weather_photo : null;
+       return $this->check_photo;
+    }
+    public function checkPhotoNullable(): ?string
+    {
+       $this->check_photo = $this->check_photo ? $this->check_photo : null;
+       return $this->check_photo;
     }
 
 }
