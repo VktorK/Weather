@@ -22,6 +22,11 @@ use yii\db\ActiveRecord;
 
 class Weather extends ActiveRecord
 {
+//    public $check_photo;
+    public static function tableName()
+    {
+        return 'weather';
+    }
 
     public function rules()
     {
@@ -31,6 +36,7 @@ class Weather extends ActiveRecord
             [['date_bying','date_end_warranty'],'date','format'=>'yyyy-MM-dd'],
             [['title'], 'string', 'max' => 100],
             [['weather_photo','check_photo','date_bying','date_end_warranty'],'safe'],
+            [['weather_photo','check_photo'],'file', 'extensions' => 'jpg,png'],
         ];
     }
 
@@ -64,10 +70,6 @@ class Weather extends ActiveRecord
             ],
         ];
     }
-    public static function tableName(): string
-    {
-        return 'weather';
-    }
 
     public function saveWeather(): bool
     {
@@ -98,6 +100,13 @@ class Weather extends ActiveRecord
     {
        $this->check_photo = $this->check_photo ? $this->check_photo : null;
        return $this->check_photo;
+    }
+
+    public function saveImageCheck($filename)
+    {
+        $this->check_photo = $filename;
+
+        return $this->save(false);
     }
 
 }

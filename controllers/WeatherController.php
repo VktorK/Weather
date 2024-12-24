@@ -2,11 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\CheckPhoto;
 use app\models\Weather;
-use Services\WeatherService;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 class WeatherController extends Controller
 {
@@ -51,10 +52,17 @@ class WeatherController extends Controller
         {
             return $this->redirect(['/site/login']);
         }
+
+
         $weather = new Weather();
 
         if ($this->request->isPost) {
             if ($weather->load($this->request->post()) && $weather->validate()) {
+//                echo '<pre>';var_dump($weather);echo '<pre>';die();
+                $check_photo = new CheckPhoto();
+                    $file = UploadedFile::getInstance($check_photo, 'check_photo');
+                    $weather->saveImageCheck($check_photo->uploadFile($file, $weather->check_photo));
+
                 if($weather->saveWeather()) {
                     return $this->redirect(['view', 'id' => $weather->id]);
                 }
