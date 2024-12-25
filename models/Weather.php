@@ -102,11 +102,30 @@ class Weather extends ActiveRecord
        return $this->check_photo;
     }
 
-    public function saveImageCheck($filename)
+    public function saveCheckPhotoChek($filename)
     {
         $this->check_photo = $filename;
 
         return $this->save(false);
+    }
+
+    public function deleteCheckPhoto()
+    {
+        $imageUploadModel = new CheckPhoto();
+        $imageUploadModel->deleteCurrentImage($this->check_photo);
+    }
+
+    public function saveWeatherPhotoChek($filename)
+    {
+        $this->check_photo = $filename;
+
+        return $this->save(false);
+    }
+
+    public function deleteWeatherPhoto()
+    {
+        $imageUploadModel = new CheckPhoto();
+        $imageUploadModel->deleteCurrentImage($this->check_photo);
     }
 
 }

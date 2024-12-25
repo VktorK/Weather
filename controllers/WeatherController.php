@@ -55,13 +55,13 @@ class WeatherController extends Controller
 
 
         $weather = new Weather();
+        $check_photo = new CheckPhoto();
 
         if ($this->request->isPost) {
-            if ($weather->load($this->request->post()) && $weather->validate()) {
+            if ($weather->load($this->request->post()) && $weather->validate() && $check_photo->load($this->request->post()) && $check_photo->validate())  {
 //                echo '<pre>';var_dump($weather);echo '<pre>';die();
-                $check_photo = new CheckPhoto();
                     $file = UploadedFile::getInstance($check_photo, 'check_photo');
-                    $weather->saveImageCheck($check_photo->uploadFile($file, $weather->check_photo));
+                    $weather->saveCheckPhotoChek($check_photo->uploadFile($file, $check_photo->check_photo));
 
                 if($weather->saveWeather()) {
                     return $this->redirect(['view', 'id' => $weather->id]);
