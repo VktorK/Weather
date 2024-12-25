@@ -53,23 +53,33 @@ class WeatherController extends Controller
             return $this->redirect(['/site/login']);
         }
 
-
         $weather = new Weather();
-        $check_photo = new CheckPhoto();
 
-        if ($this->request->isPost) {
-            if ($weather->load($this->request->post()) && $weather->validate() && $check_photo->load($this->request->post()) && $check_photo->validate())  {
-//                echo '<pre>';var_dump($weather);echo '<pre>';die();
-                    $file = UploadedFile::getInstance($check_photo, 'check_photo');
-                    $weather->saveCheckPhotoChek($check_photo->uploadFile($file, $check_photo->check_photo));
+        if ($weather->load(Yii::$app->request->post())) {
+            $weather->check_photo = UploadedFile::getInstance($weather, 'imageFile');
 
-                if($weather->saveWeather()) {
-                    return $this->redirect(['view', 'id' => $weather->id]);
-                }
+            if ($weather->upload() && $weather->save()) {
+                return $this->redirect(['view', 'id' => $weather->id]);
             }
-        } else {
-            $weather->loadDefaultValues();
         }
+
+        return $this->render('create', [
+            'weather' => $weather,
+        ]);
+
+//        if ($this->request->isPost) {
+//            if ($weather->load($this->request->post()) && $weather->validate())  {
+//                echo '<pre>';var_dump($weather);echo '<pre>';die();
+//                $weather->check_photo = UploadedFile::getInstance($weather, 'check_photo');
+//                    $weather->saveCheckPhotoChek($weather->uploadFile($weather->check_photo, $weather->check_photo));
+//
+//                if($weather->saveWeather()) {
+//                    return $this->redirect(['view', 'id' => $weather->id]);
+//                }
+//            }
+//        } else {
+//            $weather->loadDefaultValues();
+//        }
 
         return $this->render('create', [
             'weather' => $weather,

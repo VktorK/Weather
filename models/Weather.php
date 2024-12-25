@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\web\UploadedFile;
 
 
 /**
@@ -22,7 +23,8 @@ use yii\db\ActiveRecord;
 
 class Weather extends ActiveRecord
 {
-//    public $check_photo;
+    public $check_photo;
+    public $weather_photo;
     public static function tableName()
     {
         return 'weather';
@@ -124,8 +126,63 @@ class Weather extends ActiveRecord
 
     public function deleteWeatherPhoto()
     {
-        $imageUploadModel = new CheckPhoto();
+        $imageUploadModel = new Weather();
         $imageUploadModel->deleteCurrentImage($this->check_photo);
+    }
+
+    public function uploadFile(UploadedFile $file, $currentImage)
+    {
+        $this->check_photo = $file;
+
+        if($this->validate()) {
+            $this->deleteCurrentImage($currentImage);
+            return $this->saveImage();
+        }
+        return false;
+    }
+
+    public function getFolders(): string
+    {
+        return Yii::getAlias('@web') . 'uploads/';
+    }
+
+    public function generateFileName(): string
+    {
+        return strtolower(md5(uniqid($this->check_photo->baseName))) . '.' . $this->check_photo->extension;
+    }
+
+    public function deleteCurrentImage($currentImage): void
+    {
+        if ($this->imageExists($currentImage)) {
+            unlink($this->getFolders() . $currentImage);
+        }
+    }
+
+    public function imageExists($currentImage): string
+    {
+        if(!empty($currentImage) && $currentImage != null) {
+            return file_exists($this->getFolders() . $currentImage);
+        }
+        return false;
+    }
+
+    public function saveImage(): string
+    {
+        $filename = $this->generateFileName();
+        $this->check_photo->saveAs($this->getFolders() . $filename);
+
+        return $filename;
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $this->check_photo->saveAs('uploads/' . $this->check_photo->baseName . '.' . $this->check_photo->extension);
+            $this->check_photo = $this->check_photo->baseName . '.' . $this->check_photo->extension; // Сохранение имени файла в поле image
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

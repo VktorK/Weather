@@ -6,13 +6,12 @@ use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var app\models\Weather $weather */
-/** @var app\models\CheckPhoto $check_photo */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
 <div class="articles-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($weather, 'title')->textInput(['maxlength' => true]) ?>
 
@@ -20,7 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($weather, 'weather_photo')->fileInput(['maxlength' => true]) ?>
 
-    <?= $form->field($check_photo, 'check_photo')->fileInput(['maxlength' => true]) ?>
+    <?= $form->field($weather, 'check_photo')->fileInput(['maxlength' => true]) ?>
 
     <?= $form->field($weather, 'date_bying')->input('date') ?>
 
