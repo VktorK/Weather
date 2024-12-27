@@ -76,10 +76,13 @@ class Weather extends ActiveRecord
     public function saveWeather()
     {
         $this->user_id = Yii::$app->user->id;
+        if ($this->date_bying) {
         $date_bying = \DateTime::createFromFormat('Y-m-d', $this->date_bying);
-        if ($date_bying) {
-            $date_bying->modify('+2 years');
-            $this->date_end_warranty = $date_bying->format('Y-m-d');
+        $date_bying->modify('+2 years');
+        $this->date_end_warranty = $date_bying->format('Y-m-d');
+        } else {
+            $this->date_bying = null;
+            $this->date_end_warranty = null;
         }
 
         return $this->save(false);

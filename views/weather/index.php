@@ -8,7 +8,8 @@ use yii\helpers\Url;
 
 $this->title = 'Список товаров';
 ?>
-<div class="site-index">
+
+<div class="site-index" id="footer">
     <div class="jumbotron text-center bg-transparent mt-5 mb-5">
         <h1 class="display-4">Список Товаров</h1>
         <table class="table table-hover">
@@ -46,9 +47,10 @@ $this->title = 'Список товаров';
                                 ],
                             ]) ?></td>
                 </tr>
+                <?php endforeach; ?>
+                <?php endif; ?>
                 </tbody>
         </table>
-        <?php endforeach; ?>
-        <?php endif; ?>
+       <?= Html::a('Создать карточку товара', ['create'], ['class' => 'btn btn-primary'])?>
     </div>
 </div>

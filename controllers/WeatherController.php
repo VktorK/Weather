@@ -45,6 +45,9 @@ class WeatherController extends Controller
 
     public function actionCreate()
     {
+
+        $this->layout = 'main';
+
         if(Yii::$app->user->isGuest)
         {
             return $this->redirect(['/site/login']);
@@ -58,11 +61,14 @@ class WeatherController extends Controller
 
             if ($model->validate()) {
                 $model->saveWeather();
+
                 $fileWeather = UploadedFile::getInstance($weather_photo, 'weather_photo');
                 $fileCheck = UploadedFile::getInstance($check_photo, 'check_photo');
-
-                $model->saveImageCheck($check_photo->uploadFile($fileCheck, $model->check_photo));
-                $model->saveImageWeather($weather_photo->uploadFile($fileWeather, $model->weather_photo));
+                if(!empty($fileWeather)) {
+                    $model->saveImageCheck($check_photo->uploadFile($fileCheck, $model->check_photo));
+                } elseif (!empty($fileCheck)){
+                    $model->saveImageWeather($weather_photo->uploadFile($fileWeather, $model->weather_photo));
+                }
 
                     return $this->redirect(['view', 'id' => $model->id]);
 
