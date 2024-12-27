@@ -5,6 +5,8 @@ namespace app\models;
 use app\components\behaviors\AddSomeProperties;
 use Yii;
 use yii\base\Model;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * LoginForm is the model behind the login form.
@@ -17,10 +19,27 @@ class LoginForm extends Model
 
     public $email;
     public $password;
+    public $role;
+    public $updated_at;
+    public $created_at;
+
     public $rememberMe = true;
 
     public $_user = false;
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
+        ];
+    }
 
     /**
      * @return array the validation rules.

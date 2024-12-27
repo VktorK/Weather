@@ -14,6 +14,7 @@ use yii\db\Expression;
  * @property int $id
  * @property string $title
  * @property float $price
+ * @property string $seller
  * @property string|null $weather_photo
  * @property string|null $check_photo
  * @property string|null $date_bying
@@ -27,11 +28,12 @@ class Weather extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'price'], 'required'],
-            [['title','weather_photo','check_photo'], 'string'],
+            [['title', 'price','seller'], 'required'],
+            [['title','seller'], 'string'],
             [['date_bying'],'date','format'=>'yyyy-MM-dd'],
             [['date_end_warranty'],'date','format'=>'yyyy-MM-dd'],
             [['title'], 'string', 'max' => 100],
+            [['check_photo','weather_photo'], 'file', 'extensions' => 'png, jpg, jpeg']
         ];
     }
 
@@ -42,12 +44,13 @@ class Weather extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'price' => 'Price',
-            'weather_photo' => 'Weather Photo',
-            'check_photo' => 'Check Photo',
-            'date_bying' => 'Date of Buying',
-            'date_end_warranty' => 'Date of Warranty',
+            'title' => 'Описание товара(ов)',
+            'price' => 'Цена',
+            'seller' => 'Продавец/Импортер',
+            'weather' => 'Фотография товара',
+            'check' => 'Фотография Чека',
+            'date_bying' => 'Дата покупки',
+            'date_end_warranty' => 'Дата окончания гарантии',
             'user_id' => 'User ID',
         ];
     }
@@ -81,5 +84,31 @@ class Weather extends ActiveRecord
 
         return $this->save(false);
     }
+
+    public function saveImageCheck($filenameCheck)
+    {
+        $this->check_photo = $filenameCheck;
+
+        return $this->save(false);
+    }
+
+    public function saveImageWeather($filenameWeather)
+    {
+        $this->weather_photo = $filenameWeather;
+
+        return $this->save(false);
+    }
+
+    public function getCheckImage(): string
+    {
+        return ($this->check_photo) ? '/uploads/check/' . $this->check_photo : '/no-image.png';
+    }
+
+    public function getWeatherImage(): string
+    {
+        return ($this->check_photo) ? '/uploads/weather/' . $this->weather_photo : '/no-image.png';
+    }
+
+
 
 }

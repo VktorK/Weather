@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
@@ -12,6 +14,8 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $password
  * @property integer $role
+ * @property integer $updated_at
+ * @property integer $created_at
  *
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
@@ -22,6 +26,20 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public static function tableName()
     {
         return 'user';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
+        ];
     }
 
     /**

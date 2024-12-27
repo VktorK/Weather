@@ -2,10 +2,13 @@
 
 namespace app\controllers;
 
+use app\models\CheckPhotoImage;
 use app\models\Weather;
+use app\models\WeatherPhotoImage;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 class WeatherController extends Controller
 {
@@ -46,29 +49,59 @@ class WeatherController extends Controller
         {
             return $this->redirect(['/site/login']);
         }
-        $weather = new Weather();
 
-        if ($this->request->isPost) {
-            if ($weather->load($this->request->post()) && $weather->validate()) {
-                if($weather->saveWeather()) {
-                    return $this->redirect(['view', 'id' => $weather->id]);
-                }
+        $model = new Weather();
+        $check_photo = new CheckPhotoImage();
+        $weather_photo = new WeatherPhotoImage();
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            if ($model->validate()) {
+                $model->saveWeather();
+                $fileWeather = UploadedFile::getInstance($weather_photo, 'weather_photo');
+                $fileCheck = UploadedFile::getInstance($check_photo, 'check_photo');
+
+                $model->saveImageCheck($check_photo->uploadFile($fileCheck, $model->check_photo));
+                $model->saveImageWeather($weather_photo->uploadFile($fileWeather, $model->weather_photo));
+
+                    return $this->redirect(['view', 'id' => $model->id]);
+
+
+
+
+                // Сохраняем изображение
+//                if ($model->check) {
+//                    $path = '/uploads/check/' . $model->check->baseName . '.' . $model->check->extension;
+//                    $model->check->saveAs($path);
+//                    // Здесь вы можете сохранить путь изображения в базе данных
+//                    $model->check_photo_path = $path;
+//                }
+//                if ($model->weather) {
+//                    $path = '/uploads/weather/' . $model->weather->baseName . '.' . $model->weather->extension;
+//                    $model->weather->saveAs($path);
+//                    // Здесь вы можете сохранить путь изображения в базе данных
+//                    // Например, $model->image_path = $path;
+//                }
+
+                // Сохраняем пост в базе данных
+
+            } else {
+                $model->loadDefaultValues('user_id');
             }
-        } else {
-            $weather->loadDefaultValues();
         }
 
         return $this->render('create', [
-            'weather' => $weather,
-        ]);
+            'model' => $model,
+            'check_photo' => $check_photo,
+            'weather_photo'=>$weather_photo]);
     }
+
 
     protected function findModel($id)
     {
         if (($model = Weather::findOne(['id' => $id])) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

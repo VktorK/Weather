@@ -28,11 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $weather,
         'attributes' => [
-            'id',
             'title',
             'price',
-            'weather_photo',
-            'check_photo',
+            'seller',
             'date_bying',
             'date_end_warranty',
         ],

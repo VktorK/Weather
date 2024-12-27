@@ -16,6 +16,7 @@ class m241220_182059_create_weather_table extends Migration
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
             'price'=> $this->float()->notNull(),
+            'seller' => $this->string()->defaultValue(null),
             'weather_photo' => $this->string()->null()->defaultValue(null),
             'check_photo' => $this->string()->null()->defaultValue(null),
             "date_bying" => $this->date()->null()->defaultValue(null),

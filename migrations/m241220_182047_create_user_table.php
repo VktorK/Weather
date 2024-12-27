@@ -17,11 +17,10 @@ class m241220_182047_create_user_table extends Migration
             'email' => $this->string()->notNull()->unique(),
             'password' => $this->string()->notNull(),
             'role' => $this->string()->notNull()->defaultValue('user'),
-            'updated_at' => $this->timestamp()->null(),
-            'created_at' => $this->timestamp()->null(),
+            'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
+            'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
         ]);
 
-//        $this->batchInsert('{{%user}}', ['email','password','role'],['Vktork@mail.ru','lok1','admin']);
     }
 
     /**
@@ -29,6 +28,7 @@ class m241220_182047_create_user_table extends Migration
      */
     public function safeDown()
     {
+//        $this->dropTable('{{%weather}}');
         $this->dropTable('{{%user}}');
     }
 }

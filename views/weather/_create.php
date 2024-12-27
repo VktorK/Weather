@@ -5,7 +5,9 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\Weather $weather */
+/** @var app\models\Weather $model */
+/** @var app\models\CheckPhotoImage $check_photo */
+/** @var app\models\WeatherPhotoImage $weather_photo */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -13,25 +15,18 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($weather, 'title')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($weather, 'price')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($weather, 'weather_photo')->fileInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'seller')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($weather, 'check_photo')->fileInput(['maxlength' => true]) ?>
+    <?= $form->field($weather_photo, 'weather_photo')->fileInput() ?>
 
-    <?= $form->field($weather, 'date_bying')->input('date') ?>
+    <?= $form->field($check_photo, 'check_photo')->fileInput() ?>
 
-<!--        --><?php //echo '<label class="form-label">End Warranty</label>';
-//            echo DatePicker::widget([
-//                'name' => 'date_bying',
-//                'type' => DatePicker::TYPE_COMPONENT_APPEND,
-//                'pluginOptions' => [
-//                    'format' => 'dd-mm-yyyy',
-//                    'autoclose' => true,
-//            ]
-//        ]); ?>
+    <?= $form->field($model, 'date_bying')->input('date') ?>
+
 
     <div class="form-group mt-4">
         <?= Html::submitButton('Create', ['class' => 'btn btn-success']) ?>
