@@ -104,12 +104,12 @@ class Weather extends ActiveRecord
 
     public function getCheckImage(): string
     {
-        return ($this->check_photo) ? '/uploads/check_photo/' . $this->check_photo : '/no-image.png';
+        return ($this->check_photo) ? '/uploads/check_photo/' . $this->check_photo : '/uploads/no-image.png';
     }
 
     public function getWeatherImage(): string
     {
-        return ($this->check_photo) ? '/uploads/weather_photo/' . $this->weather_photo : '/no-image.png';
+        return ($this->check_photo) ? '/uploads/weather_photo/' . $this->weather_photo : '/uploads/no-image.png';
     }
 
 

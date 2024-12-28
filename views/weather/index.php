@@ -34,7 +34,7 @@ $this->title = 'Список товаров';
                     <td><?= $weather->title ?></td>
                     <td><?= $weather->price ?></td>
                     <td><?= $weather->seller ?></td>
-                    <td><a href="<?= Url::toRoute(['weather/view','id'=>$weather->id]) ?>"><img src="<?=$weather->getWeatherImage()?>" alt = 'Фото товара' style="width: 200px; height: 200px;"></a></td>
+                    <td><a href="<?= Url::toRoute(['weather/view','id'=>$weather->id]) ?>"><img src="<?=$weather->getWeatherImage() ?>" alt = 'Фото товара' style="width: 200px; height: 200px;"></a></td>
                     <td><a href="<?= Url::toRoute(['weather/view','id'=>$weather->id]) ?>"><img src="<?=$weather->getCheckImage()?>"  alt = 'Фото чека' style="width: 200px; height: 200px;"</a></td>
                     <td><?= is_null($weather->date_bying) ? 'Дата покупки не установлена' : Yii::$app->formatter->asDate($weather->date_bying, 'php:d-m-Y') ?></td>
                     <td><?= is_null($weather->date_end_warranty) ? 'Дата окончания гарантии не установлена' : Yii::$app->formatter->asDate($weather->date_end_warranty, 'php:d-m-Y') ?></td>

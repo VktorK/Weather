@@ -25,9 +25,8 @@ class CheckPhotoImage extends Model
         ];
     }
 
-    public function uploadFile(UploadedFile $file, $currentImage)
+    public function uploadFile(?UploadedFile $file, $currentImage)
     {
-
         $this->check_photo = $file;
 
         if($this->validate()) {

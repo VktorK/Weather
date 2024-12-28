@@ -64,7 +64,7 @@ class WeatherController extends Controller
 
                 $fileWeather = UploadedFile::getInstance($weather_photo, 'weather_photo');
                 $fileCheck = UploadedFile::getInstance($check_photo, 'check_photo');
-                if(!is_null($fileWeather)) {
+                if (!is_null($fileWeather)) {
                     $model->saveImageCheck($check_photo->uploadFile($fileCheck, $model->check_photo));
                 }
                 if (!is_null($fileCheck)){
