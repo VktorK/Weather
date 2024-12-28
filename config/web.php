@@ -13,41 +13,21 @@ $config = [
     ],
     'components' => [
 //        'mailer' => [
-//            'class' => 'yii\swiftmailer\Mailer',
-//            'useFileTransport'=>'false',
-//            'viewPath' => '@app/mail',
+//            'class' => \yii\symfonymailer\Mailer::class,
 //            'transport' => [
-//                    'class' => 'Swift_SmtpTransport',
-//                    'host' => '', // Укажите ваш SMTP-сервер
-//                    'username' => 'viktorkorochanskiy@rambler.ru', // Ваш логин
-//                    'password' => 'Goozman011', // Ваш пароль
-//                    'port' => 587, // Порт (обычно 587 для TLS или 465 для SSL)
-//                    'encryption' => 'tls',
-//                    'streamOptions' => [
-//                        'ssl' => [
-//                            'verify_peer' => false,
-//                            'verify_peer_name' => false,
-//                            'allow_self_signed' => true
-//                    ]
-//                ]
+//                'scheme' => 'stmps',
+//                'host' => 'smtp.mail.ru',
+//                'username' => '4you.19885@mail.ru',
+//                'password' => 'M0XatPL4qBc4vJrp6nZj',
+//                'port' => 465,
+//                'dsn' => 'native://default',
 //            ],
+//            'viewPath' => '@app/mail',
+//            // send all mails to a file by default. You have to set
+//            // 'useFileTransport' to false and configure transport
+//            // for the mailer to send real emails.
+//            'useFileTransport' => false,
 //        ],
-        'mailer' => [
-            'class' => \yii\symfonymailer\Mailer::class,
-            'transport' => [
-                'scheme' => 'smtps',
-                'host' => 'smtp.mail.ru',
-                'username' => '4you.19885@mail.ru',
-                'password' => 'M0XatPL4qBc4vJrp6nZj',
-                'port' => 465,
-                'dsn' => 'native://default',
-            ],
-            'viewPath' => '@app/mail',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure transport
-            // for the mailer to send real emails.
-            'useFileTransport' => false,
-        ],
 
         'formatter' => [
             'class' => 'yii\i18n\Formatter',

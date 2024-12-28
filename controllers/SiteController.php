@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\AppMailer;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
@@ -89,39 +90,12 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionContactt()
+    public function actionEmail()
     {
-//////        require_once '/path/to/vendor/autoload.php';
-        $transport = (new Swift_SmtpTransport('smtp.rambler.ru', 587))->setUsername('viktorkorochanskiy@rambler.ru')
-            ->setPassword('Sherlock011')
-        ;
+        $mailer = new AppMailer();
+        $mailer->sendEmail('gg.shmarkova@mail.ru', 'Weather project', 'Weather Project');
 
-// Create the Mailer using your created Transport
-        $mailer = new Swift_Mailer($transport);
-
-// Create a message
-        $message = (new Swift_Message('Wonderful Subject'))
-            ->setFrom('viktorkorochanskiy@rambler.ru')
-            ->setTo('4you.19885@mail.ru.ru')
-            ->setBody('Here is the message itself');
-
-// Send the message
-        $mailer->send($message);
-
-        echo '112312321';
-//
-//        var_dump($resutl);
-//        $result = Yii::$app->mailer->compose()
-//            ->setFrom('4you.19885@mail.ru') // Отправитель
-//            ->setTo('gg.shmarkova@mail.ru') // Получатель4you.19885@mail.ru
-//            ->setSubject('Эль пидрильо') // Тема письма
-//            ->setTextBody('Вот тебе и НА') // Текстовое сообщение
-////            ->setHtmlBody('<b>HTML-контент сообщения</b>') // HTML-содержимое
-//            ->send();
-//
-//
-        var_dump($result);die();
-        return '11111111111';
+        return $this->render('index');
     }
 
     /**
