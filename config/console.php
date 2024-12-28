@@ -14,6 +14,26 @@ $config = [
         '@tests' => '@app/tests',
     ],
     'components' => [
+//        'mailer' => [
+//            'class' => 'yii\swiftmailer\Mailer',
+//            'useFileTransport'=>'false',
+//            'viewPath' => '@app/mail',
+//            'transport' => [
+//                'class' => 'Swift_SmtpTransport',
+//                'host' => 'smtp.mail.ru', // Укажите ваш SMTP-сервер
+//                'username' => '4you.19885@mail.ru', // Ваш логин
+//                'password' => 'M0XatPL4qBc4vJrp6nZj', // Ваш пароль
+//                'port' => 587, // Порт (обычно 587 для TLS или 465 для SSL)
+//                'encryption' => 'tls',
+//                'streamOptions' => [
+//                    'ssl' => [
+//                        'verify_peer' => false,
+//                        'verify_peer_name' => false,
+//                        'allow_self_signed' => true
+//                    ]
+//                ]
+//            ],
+//        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],

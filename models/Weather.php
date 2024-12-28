@@ -62,8 +62,8 @@ class Weather extends ActiveRecord
             [
                 'class' => TimestampBehavior::class,
                 'attributes' => [
-                    BaseActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    BaseActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                    BaseActiveRecord::EVENT_BEFORE_INSERT,
+                    BaseActiveRecord::EVENT_BEFORE_UPDATE
                 ],
                 'value' => new Expression('NOW()'),
             ],
@@ -82,8 +82,8 @@ class Weather extends ActiveRecord
         $date_bying->modify('+2 years');
         $this->date_end_warranty = $date_bying->format('Y-m-d');
         } else {
-            $this->date_bying = null;
-            $this->date_end_warranty = null;
+            $this->date_bying = new Expression('NOW()');
+            $this->date_end_warranty = new Expression('NOW() + 2 years');
         }
 
         return $this->save(false);
