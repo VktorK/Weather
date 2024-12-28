@@ -39,7 +39,7 @@ class WeatherPhotoImage extends Model
 
     public function getFolders(): string
     {
-        return Yii::getAlias('@web') . 'uploads/weather/';
+        return Yii::getAlias('@web') . 'uploads/weather_photo/';
     }
 
     public function generateFileName(): string

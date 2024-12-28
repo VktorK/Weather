@@ -39,7 +39,7 @@ class CheckPhotoImage extends Model
 
     public function getFolders(): string
     {
-        return Yii::getAlias('@web') . 'uploads/check/';
+        return Yii::getAlias('@web') . 'uploads/check_photo/';
     }
 
     public function generateFileName(): string
