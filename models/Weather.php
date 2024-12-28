@@ -2,11 +2,13 @@
 
 namespace app\models;
 
+use DateTime;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\BaseActiveRecord;
 use yii\db\Expression;
+
 
 /**
  * This is the model class for table "weather".
@@ -25,13 +27,12 @@ use yii\db\Expression;
 class Weather extends ActiveRecord
 {
 
-    public function rules()
+    public function rules(): array
     {
         return [
-            [['title', 'price','seller'], 'required'],
+            [['title', 'price','seller','date_bying'], 'required'],
             [['title','seller'], 'string'],
-            [['date_bying'],'date','format'=>'yyyy-MM-dd'],
-            [['date_end_warranty'],'date','format'=>'yyyy-MM-dd'],
+            [['date_bying','date_end_warranty'],'date','format'=>'yyyy-MM-dd'],
             [['title'], 'string', 'max' => 100],
             [['check_photo','weather_photo'], 'file', 'extensions' => 'png, jpg, jpeg']
         ];
@@ -40,7 +41,7 @@ class Weather extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -55,16 +56,16 @@ class Weather extends ActiveRecord
         ];
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             [
                 'class' => TimestampBehavior::class,
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                    BaseActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    BaseActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
-                'value' => new \yii\db\Expression('NOW()'),
+                'value' => new Expression('NOW()'),
             ],
         ];
     }
@@ -73,11 +74,11 @@ class Weather extends ActiveRecord
         return 'weather';
     }
 
-    public function saveWeather()
+    public function saveWeather(): bool
     {
         $this->user_id = Yii::$app->user->id;
         if ($this->date_bying) {
-        $date_bying = \DateTime::createFromFormat('Y-m-d', $this->date_bying);
+        $date_bying = DateTime::createFromFormat('Y-m-d', $this->date_bying);
         $date_bying->modify('+2 years');
         $this->date_end_warranty = $date_bying->format('Y-m-d');
         } else {
@@ -88,14 +89,14 @@ class Weather extends ActiveRecord
         return $this->save(false);
     }
 
-    public function saveImageCheck($filenameCheck)
+    public function saveImageCheck($filenameCheck): bool
     {
         $this->check_photo = $filenameCheck;
 
         return $this->save(false);
     }
 
-    public function saveImageWeather($filenameWeather)
+    public function saveImageWeather($filenameWeather): bool
     {
         $this->weather_photo = $filenameWeather;
 

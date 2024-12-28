@@ -46,8 +46,6 @@ class WeatherController extends Controller
     public function actionCreate()
     {
 
-        $this->layout = 'main';
-
         if(Yii::$app->user->isGuest)
         {
             return $this->redirect(['/site/login']);
@@ -71,26 +69,9 @@ class WeatherController extends Controller
                     $model->saveImageWeather($weather_photo->uploadFile($fileWeather, $model->weather_photo));
                 }
 
-                    return $this->redirect(['view', 'id' => $model->id]);
-
-
-
-
-                // Сохраняем изображение
-//                if ($model->check) {
-//                    $path = '/uploads/check/' . $model->check->baseName . '.' . $model->check->extension;
-//                    $model->check->saveAs($path);
-//                    // Здесь вы можете сохранить путь изображения в базе данных
-//                    $model->check_photo_path = $path;
-//                }
-//                if ($model->weather) {
-//                    $path = '/uploads/weather/' . $model->weather->baseName . '.' . $model->weather->extension;
-//                    $model->weather->saveAs($path);
-//                    // Здесь вы можете сохранить путь изображения в базе данных
-//                    // Например, $model->image_path = $path;
-//                }
-
-                // Сохраняем пост в базе данных
+                    return $this->redirect(['view',
+                        'id' => $model->id,
+                    ]);
 
             } else {
                 $model->loadDefaultValues('user_id');

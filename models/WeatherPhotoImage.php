@@ -10,7 +10,7 @@ class WeatherPhotoImage extends Model
 {
     public $weather_photo;
 
-    public function rules(): array
+    public function rules()
     {
         return [
             [['weather_photo'], 'safe'],
@@ -42,7 +42,7 @@ class WeatherPhotoImage extends Model
         return Yii::getAlias('@web') . 'uploads/weather_photo/';
     }
 
-    public function generateFileName(): string
+    public function generateFileName(): ?string
     {
         return strtolower(md5(uniqid($this->weather_photo->baseName))) . '.' . $this->weather_photo->extension;
     }
