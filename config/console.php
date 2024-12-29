@@ -14,6 +14,10 @@ $config = [
         '@tests' => '@app/tests',
     ],
     'components' => [
+//        'user' => [
+//            'identityClass' => 'app\models\User',
+//            'enableAutoLogin' => true,
+//            ],
 //        'mailer' => [
 //            'class' => 'yii\swiftmailer\Mailer',
 //            'useFileTransport'=>'false',

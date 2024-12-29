@@ -2,10 +2,6 @@
 
 namespace app\controllers;
 
-use app\components\AppMailer;
-use Swift_Mailer;
-use Swift_Message;
-use Swift_SmtpTransport;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
