@@ -3,7 +3,9 @@
 namespace app\controllers;
 
 use app\components\AppMailer;
+use app\models\Mail;
 use app\models\Weather;
+use mysql_xdevapi\Expression;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
@@ -68,26 +70,42 @@ class MailController extends Controller
     public function actionSendEmail()
     {
         $threeMonthsAgo = (new \DateTime())->modify('-3 months')->format('Y-m-d');
-//        $records = Yii::$app->db->createCommand()
-//            ->select('*')
-//            ->from('weather')
-//            ->where(['<', 'date_end_warranty', $threeMonthsAgo])
-//            ->queryAll();
 
-        $query = new Query();
-        $query->select('*')->from('weather')->where(['<', 'date_end_warranty', $threeMonthsAgo]);
-        $command = $query->createCommand();
-        $records = $command->queryAll();
-        var_dump($records);die();
-        $mailer = new AppMailer();
-        foreach ($records as $record)
-        {
+        $weathers = Weather::find()
+            ->where(['<', 'date_end_warranty', $threeMonthsAgo])
+            ->with('user')
+            ->all();
 
+        if (count($weathers) > 0) {
+            foreach ($weathers as $weather) {
+
+                $mailCHeck = Mail::find()
+                    ->where(['weather_id' => $weather->id])
+                    ->orderBy('created_at')
+                    ->one();
+
+                if (is_null($mailCHeck)) {
+                    $to = $weather->user->email;
+                    $subject = 'Weather project';
+                    $body = 'Срок обращения по товару ' . $weather->title . 'оканчивается' . $weather->date_end_warranty . '. Необходимо поднять жопу и подать претензию хотя бы.';
+                    $mailer = new AppMailer();
+                    $result = $mailer->sendEmail($to, $subject, $body);
+
+                    if ($result) {
+                        Yii::$app->session->setFlash('Письмо отправлено ');
+                        $email = new Mail();
+                        $email->email = $weather->user->email;
+                        $email->weather_id = $weather->id;
+                        $email->is_send = 1;
+                        if ($email->validate()) {
+                            $email->save(false);
+                        }
+                    }
+                }
+
+
+                Yii::$app->session->setFlash('Письмо отправлено ');
+            }
         }
-
-        $mailer->sendEmail('gg.shmarkova@mail.ru', 'Weather project', 'Weather Project');
-
-        Yii::$app->session->setFlash('Письмо отправлено ');
     }
-
 }

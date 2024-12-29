@@ -16,7 +16,7 @@ class AppMailer
         $this->mailer = new Mailer($transport);
     }
 
-    public function sendEmail($to, $subject, $body)
+    public function sendEmail($to, $subject, $body): bool
     {
         $email = (new Email())
             ->from('viktorkorochanskiy@rambler.ru')
@@ -24,6 +24,10 @@ class AppMailer
             ->subject($subject)
             ->text($body);
 
-        $this->mailer->send($email);
+        if($this->mailer->send($email))
+        {
+            return false;
+        }
+        return true;
     }
 }

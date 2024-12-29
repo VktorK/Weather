@@ -90,14 +90,6 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionEmail()
-    {
-        $mailer = new AppMailer();
-        $mailer->sendEmail('gg.shmarkova@mail.ru', 'Weather project', 'Weather Project');
-
-        return $this->render('index');
-    }
-
     /**
      * Logout action.
      *

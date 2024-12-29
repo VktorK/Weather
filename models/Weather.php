@@ -113,6 +113,10 @@ class Weather extends ActiveRecord
         return ($this->check_photo) ? '/uploads/weather_photo/' . $this->weather_photo : '/uploads/no-image.png';
     }
 
+    public function getUser()
+    {
+        return $this->hasOne(User::class,['id'=>'user_id']);
+    }
 
 
 }

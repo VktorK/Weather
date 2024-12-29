@@ -39,8 +39,8 @@ class Mail extends ActiveRecord
             [
                 'class' => TimestampBehavior::class,
                 'attributes' => [
-                    BaseActiveRecord::EVENT_BEFORE_INSERT,
-                    BaseActiveRecord::EVENT_BEFORE_UPDATE
+                    BaseActiveRecord::EVENT_BEFORE_INSERT=>['created_at','updated_at'],
+                    BaseActiveRecord::EVENT_BEFORE_UPDATE=>['updated_at']
                 ],
                 'value' => new Expression('NOW()'),
             ],
