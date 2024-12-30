@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\CheckPhotoImage;
 use app\models\Weather;
 use app\models\WeatherPhotoImage;
+use app\models\WeatherSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -14,12 +15,25 @@ class WeatherController extends Controller
 {
 
 
+//    public function actionIndex()
+//    {
+//
+//        $weathers = Weather::find()->where(['user_id' => Yii::$app->user->id])->all();
+//
+//        return $this->render('index', ['weathers'=> $weathers]);
+//    }
+
     public function actionIndex()
     {
-
         $weathers = Weather::find()->where(['user_id' => Yii::$app->user->id])->all();
+        $searchModel = new WeatherSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', ['weathers'=> $weathers]);
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'weathers'=>$weathers
+        ]);
     }
 
     public function actionUpdate()
