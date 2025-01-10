@@ -56,6 +56,23 @@ class Weather extends ActiveRecord
         ];
     }
 
+    public function toArrayCustom(): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'price' => $this->price,
+            'seller' => $this->seller,
+            'weather_photo' => $this->weather_photo,
+            'check_photo' => $this->check_photo,
+            'date_bying' => $this->date_bying,
+            'date_end_warranty' => $this->date_end_warranty,
+            'user_id' => $this->user_id,
+            'updated_at' => $this->updated_at,
+            'created_at' => $this->created_at,
+        ];
+    }
+
     public function behaviors(): array
     {
         return [

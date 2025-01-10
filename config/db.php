@@ -4,8 +4,8 @@ return [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=127.0.0.1;dbname=weather;port=3306',
     'username' => 'root',
-    'password' => '',
-    'charset' => 'utf8',
+    'password' => 'Zghjuhfvbcn011',
+    'charset' => 'utf8mb4',
 
     // Schema cache options (for production environment)
     //'enableSchemaCache' => true,

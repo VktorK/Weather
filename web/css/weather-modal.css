@@ -1,0 +1,34 @@
+.product-row {
+    cursor: pointer;
+}
+
+.product-row:hover {
+    background-color: #f0f0f0; /* Подсветка строки при наведении */
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.close-button {
+    cursor: pointer;
+    position: absolute; /* Изменяем на абсолютное позиционирование */
+    top: 10px; /* Располагаем кнопку на 10 пикселей от верхней границы */
+    right: 10px; /* И на 10 пикселей от правой границы */
+    font-size: 20px;
+}

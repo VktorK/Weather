@@ -6,9 +6,12 @@ use app\models\CheckPhotoImage;
 use app\models\Weather;
 use app\models\WeatherPhotoImage;
 use app\models\WeatherSearch;
+// ошибка в namespace стоила мне часа мытарства!!!! АААА
+use app\helpers\ArrayHelper;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 class WeatherController extends Controller
@@ -23,16 +26,19 @@ class WeatherController extends Controller
 //        return $this->render('index', ['weathers'=> $weathers]);
 //    }
 
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $weathers = Weather::find()->where(['user_id' => Yii::$app->user->id])->all();
+        $weathersJs = ArrayHelper::toJson($weathers);
         $searchModel = new WeatherSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//        echo'<pre>';var_dump($weathers);echo'<pre>';die();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'weathers'=>$weathers
+            'weathers'=>$weathers,
+            'weathersJs' => $weathersJs
         ]);
     }
 
@@ -41,13 +47,13 @@ class WeatherController extends Controller
            var_dump('11111111111');
     }
 
-    public function actionDestroy($id)
+    public function actionDestroy($id): Response
     {
         Weather::findOne($id)->delete();
         return $this->redirect(['index']);
     }
 
-    public function actionView($id)
+    public function actionView($id): string
     {
         $weather = Weather::find()->where(['id'=>$id])->one();
         $weather->date_bying = Yii::$app->formatter->asDate($weather->date_bying, 'php:d-m-Y');
@@ -99,7 +105,10 @@ class WeatherController extends Controller
     }
 
 
-    protected function findModel($id)
+    /**
+     * @throws NotFoundHttpException
+     */
+    protected function findModel($id): ?Weather
     {
         if (($model = Weather::findOne(['id' => $id])) !== null) {
             return $model;

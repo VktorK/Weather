@@ -2,11 +2,28 @@
 
 /** @var yii\web\View $this */
 /** @var app\models\Weather $weathers */
+/** @var app\models\Weather $weathersJs Сюда она пришла в виде JSON*/
 
-use yii\bootstrap5\ActiveForm;
+use app\assets\AppAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+try {
+    $this->registerCssFile('@web/css/weather-modal.css', [
+        'depends' => [AppAsset::class],
+    ]);
+} catch (\yii\base\InvalidConfigException $e) {
+    var_dump('error weather-modal.css');die();
+}
+
+try {
+    $this->registerJsFile(
+        '@web/js/window.js',
+        ['depends' => [AppAsset::class]]
+    );
+} catch (\yii\base\InvalidConfigException $e) {
+    var_dump('error modal.sj');die();
+}
 $this->title = 'Список товаров';
 ?>
 
@@ -31,7 +48,7 @@ $this->title = 'Список товаров';
                 <?php if(count($weathers) === 0) : ?>
                 <?php else: ?>
                 <?php foreach ($weathers as $weather)  : ?>
-                <tr>
+                        <tr class="weather-row" data-id="<?= $weather->id ?>">
                     <td><?= $weather->title ?></td>
                     <td><?= $weather->price ?></td>
                     <td><?= $weather->seller ?></td>
@@ -46,12 +63,28 @@ $this->title = 'Список товаров';
                                     'confirm' => 'Are you sure you want to delete this item?',
                                     'method' => 'post',
                                 ],
-                            ]) ?></td>
+                            ]) ?>
+                        </td>
+
                 </tr>
                 <?php endforeach; ?>
                 <?php endif; ?>
                 </tbody>
         </table>
+        <div id="weather-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2 id="modal-title"></h2>
+                <p id="modal-price"></p>
+                <p id="modal-seller"></p>
+            </div>
+        </div>
        <?= Html::a('Создать карточку товара', ['create'], ['class' => 'btn btn-primary'])?>
     </div>
 </div>
+<script>
+    // Передаем данные из PHP в JavaScript
+    const weatherData = <?php echo $weathersJs; ?>;
+</script>
+
+
