@@ -24,7 +24,7 @@ try {
 } catch (\yii\base\InvalidConfigException $e) {
     var_dump('error modal.sj');die();
 }
-$this->title = 'Список товаров';
+$this->title = 'Список покупок';
 ?>
 
 <div class="site-index" id="footer">
@@ -56,14 +56,19 @@ $this->title = 'Список товаров';
                     <td><a href="<?= Url::toRoute(['weather/view','id'=>$weather->id]) ?>"><img src="<?=$weather->getCheckImage()?>"  alt = 'Фото чека' style="width: 200px; height: 200px;"</a></td>
                     <td><?= is_null($weather->date_bying) ? 'Дата покупки не установлена' : Yii::$app->formatter->asDate($weather->date_bying, 'php:d-m-Y') ?></td>
                     <td><?= is_null($weather->date_end_warranty) ? 'Дата окончания гарантии не установлена' : Yii::$app->formatter->asDate($weather->date_end_warranty, 'php:d-m-Y') ?></td>
-                        <td><?= Html::a('Обновить', ['update', 'id' => $weather->id], ['class' => 'btn btn-primary'])?></td>
-                        <td><?= Html::a('Удалить', ['destroy', 'id' => $weather->id], [
-                                'class' => 'btn btn-danger',
+                        <td><?= Html::a('Обновить',
+                                ['update', 'id' => $weather->id],
+                                ['class' => 'btn btn-primary'])
+                            ?>
+                        </td>
+                        <td><?= Html::a('Удалить',
+                                ['destroy', 'id' => $weather->id],
+                                ['class' => 'btn btn-danger',
                                 'data' => [
                                     'confirm' => 'Are you sure you want to delete this item?',
                                     'method' => 'post',
-                                ],
-                            ]) ?>
+                                ],])
+                            ?>
                         </td>
 
                 </tr>

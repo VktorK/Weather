@@ -136,4 +136,15 @@ class Weather extends ActiveRecord
     }
 
 
+    public function saveUpdate($dateOfBying)
+    {
+        if($this->date_bying != $dateOfBying)
+        {
+            $date_bying = DateTime::createFromFormat('Y-m-d', $this->date_bying);
+            $date_bying->modify('+2 years');
+            $this->date_end_warranty = $date_bying->format('Y-m-d');
+            return $this->save(false);
+        }
+    }
+
 }

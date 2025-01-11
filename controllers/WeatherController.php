@@ -32,7 +32,6 @@ class WeatherController extends Controller
         $weathersJs = ArrayHelper::toJson($weathers);
         $searchModel = new WeatherSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-//        echo'<pre>';var_dump($weathers);echo'<pre>';die();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -42,9 +41,20 @@ class WeatherController extends Controller
         ]);
     }
 
-    public function actionUpdate()
+    public function actionUpdate($id)
     {
-           var_dump('11111111111');
+        $model = $this->findModel($id);
+        $dateOfBying = $model->date_bying;
+
+
+        if ($model->load(Yii::$app->request->post()) && $model->saveUpdate($dateOfBying)) {
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+
     }
 
     public function actionDestroy($id): Response

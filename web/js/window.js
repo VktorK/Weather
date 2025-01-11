@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     const modal = $('#weather-modal');
     console.log(weatherData)
     $('.weather-row').on('click', function() {
@@ -10,7 +9,7 @@ $(document).ready(function() {
         if (weather) {
             $('#modal-title').text(weather.title);
             $('#modal-price').text(weather.price + ' Р');
-            $('#modal-seller').text(weather.seller || 'Нет описания');
+            $('#modal-seller').text(weather.seller || 'Не указан продавец');
 
             modal.show();
         }
