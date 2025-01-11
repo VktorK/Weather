@@ -18,7 +18,7 @@ try {
 
 try {
     $this->registerJsFile(
-        '@web/js/window.js',
+        '@web/js/window-modal.js',
         ['depends' => [AppAsset::class]]
     );
 } catch (\yii\base\InvalidConfigException $e) {

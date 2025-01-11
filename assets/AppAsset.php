@@ -24,7 +24,7 @@ class AppAsset extends AssetBundle
         'css/weather-modal.css',
     ];
     public $js = [
-        'js/window.js'
+        'js/window-modal.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
