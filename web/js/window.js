@@ -1,10 +1,8 @@
 $(document).ready(function() {
     const modal = $('#weather-modal');
-    console.log(weatherData)
     $('.weather-row').on('click', function() {
         const weatherId = $(this).data('id');
         const weather = weatherData.find(w => w.id === weatherId);
-
 
         if (weather) {
             $('#modal-title').text(weather.title);
