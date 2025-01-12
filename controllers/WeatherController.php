@@ -13,6 +13,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
+use function PHPUnit\Framework\directoryExists;
 
 class WeatherController extends Controller
 {
@@ -92,11 +93,11 @@ class WeatherController extends Controller
 
                 $fileWeather = UploadedFile::getInstance($weather_photo, 'weather_photo');
                 $fileCheck = UploadedFile::getInstance($check_photo, 'check_photo');
-                if (!is_null($fileWeather)) {
-                    $model->saveImageCheck($check_photo->uploadFile($fileCheck, $model->check_photo));
-                }
-                if (!is_null($fileCheck)){
+                if ($fileWeather) {
                     $model->saveImageWeather($weather_photo->uploadFile($fileWeather, $model->weather_photo));
+                }
+                if ($fileCheck){
+                    $model->saveImageCheck($check_photo->uploadFile($fileCheck, $model->check_photo));
                 }
 
                     return $this->redirect(['view',
@@ -114,6 +115,22 @@ class WeatherController extends Controller
             'weather_photo'=>$weather_photo]);
     }
 
+    public function actionCreateDir($id)
+    {
+//        var_dump($id);die();
+        $userId = Yii::$app->user->id;
+        $makeDIr = Yii::getAlias('@web') . 'uploads/weather_photo/' . $id . '/' . $userId. '/';
+        if(!is_dir($makeDIr))
+        {
+            mkdir($makeDIr, 0777, true);
+            echo 'Директория создана';
+        }
+        else
+        {
+            echo 'Директория уже существует';
+        }
+    }
+
 
     /**
      * @throws NotFoundHttpException
@@ -125,4 +142,6 @@ class WeatherController extends Controller
         }
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
 }

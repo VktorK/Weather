@@ -38,7 +38,15 @@ class CheckPhotoImage extends Model
 
     public function getFolders(): string
     {
-        return Yii::getAlias('@web') . 'uploads/check_photo/';
+        $userId = Yii::$app->user->id;
+        $makeDir = Yii::getAlias('@web') . 'uploads/check_photo/' . $userId . '/';
+        if(!is_dir($makeDir))
+        {
+            mkdir($makeDir, 0777, true);
+            return $makeDir;
+        } else {
+            return $makeDir;
+        }
     }
 
     public function generateFileName(): string
