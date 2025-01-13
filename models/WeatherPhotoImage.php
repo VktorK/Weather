@@ -12,6 +12,7 @@ class WeatherPhotoImage extends Model
 
     public function rules()
     {
+        parent::rules();
         return [
             [['weather_photo'], 'safe'],
             [['weather_photo'], 'file', 'extensions' => 'jpg,png,jpeg', 'maxSize' => 1024 * 1024 * 2],
@@ -40,7 +41,7 @@ class WeatherPhotoImage extends Model
     public function getFolders(): string
     {
         $userId = Yii::$app->user->id;
-        $makeDir = Yii::getAlias('@web') . 'uploads/check_photo/' . $userId . '/';
+        $makeDir = Yii::getAlias('@web') . 'uploads/weather_photo/' . $userId . '/';
         if(!is_dir($makeDir))
         {
             mkdir($makeDir, 0777, true);

@@ -122,12 +122,13 @@ class Weather extends ActiveRecord
 
     public function getCheckImage(): string
     {
-        return ($this->check_photo) ? '/uploads/check_photo/' . Yii::$app->user->id . '/' . $this->check_photo : '/uploads/no-image.png';
+        return $this->check_photo ? '/uploads/check_photo/' . Yii::$app->user->id . '/' . $this->check_photo : '/uploads/no-image.png';
     }
 
     public function getWeatherImage(): string
     {
-        return ($this->check_photo) ? '/uploads/weather_photo/' . Yii::$app->user->id . '/' . $this->weather_photo : '/uploads/no-image.png';
+
+        return $this->check_photo ? '/uploads/weather_photo/' . Yii::$app->user->id . '/'  . $this->weather_photo : '/uploads/no-image.png';
     }
 
     public function getUser()

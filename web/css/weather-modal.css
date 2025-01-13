@@ -33,3 +33,33 @@
     right: 10px; /* И на 10 пикселей от правой границы */
     font-size: 20px;
 }
+
+#posts-container {
+    border: 1px solid #ccc;
+    display: none; /* Скрываем по умолчанию */
+    position: absolute;
+    background-color: white;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+}
+#posts-container div {
+    padding: 10px;
+    cursor: pointer;
+}
+#posts-container div:hover {
+    background-color: #f0f0f0;
+}
+
+#container {
+    position: relative;
+}
+
+#submit-button {
+
+    right: 0;
+    top: 0;
+    padding: 10px;
+    cursor: pointer;
+    /*margin-top: 100px;*/
+}
