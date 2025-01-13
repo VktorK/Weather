@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\ItemSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -124,6 +125,21 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionSearch($query)
+    {
+//        var_dump($query);die();
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $searchModel = new ItemSearch($query);
+        $searchModel->load(Yii::$app->request->get());
+
+        // Получаем данные
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        // Возвращаем результаты в формате JSON
+        return $dataProvider->getModels(); // или любой другой формат данных, который вам нужен
     }
 
 }

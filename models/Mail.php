@@ -51,4 +51,16 @@ class Mail extends ActiveRecord
         return 'email';
     }
 
+    public function toArrayCustom(): array
+    {
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'weather_id' => $this->weather_id,
+            'is_send' => $this->is_send,
+            'updated_at' => $this->updated_at,
+            'created_at' => $this->created_at,
+        ];
+    }
+
 }

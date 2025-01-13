@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\CheckPhotoImage;
+use app\models\Mail;
 use app\models\Weather;
 use app\models\WeatherPhotoImage;
 use app\models\WeatherSearch;
@@ -13,7 +14,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
-use function PHPUnit\Framework\directoryExists;
 
 class WeatherController extends Controller
 {
@@ -93,10 +93,12 @@ class WeatherController extends Controller
 
                 $fileWeather = UploadedFile::getInstance($weather_photo, 'weather_photo');
                 $fileCheck = UploadedFile::getInstance($check_photo, 'check_photo');
-                if ($fileWeather) {
+
+
+                if (!is_null($fileWeather)) {
                     $model->saveImageWeather($weather_photo->uploadFile($fileWeather, $model->weather_photo));
                 }
-                if ($fileCheck){
+                if (!is_null($fileCheck)){
                     $model->saveImageCheck($check_photo->uploadFile($fileCheck, $model->check_photo));
                 }
 
@@ -143,5 +145,25 @@ class WeatherController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    public function actionInput()
+    {
+                $model = new Mail();
+                $weather = new Weather();
 
+                // Получаем все посты из базы данных
+                $posts = Mail::find()->all();
+                $postsJs = ArrayHelper::toJson($posts);
+
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    // Логика после сохранения поста
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+
+                return $this->render('input', [
+                    'model' => $model,
+                    'posts' => $posts,
+                    'postsJs' => $postsJs,
+                    'weather' => $weather
+                ]);
+            }
 }
