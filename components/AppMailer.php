@@ -11,18 +11,19 @@ class AppMailer
 
     public function __construct()
     {
-// Настройка транспортного протокола
-        $transport = Transport::fromDsn('smtp://viktorkorochanskiy@rambler.ru:Sherlock011@smtp.rambler.ru:587');
+        $transport = Transport::fromDsn('smtp://vktork@rambler.ru:Sherlock011@smtp.rambler.ru:587');
         $this->mailer = new Mailer($transport);
     }
 
-    public function sendEmail($to, $subject, $body): bool
+    public function sendEmail($to, $subject, $body,$attach)
     {
         $email = (new Email())
-            ->from('viktorkorochanskiy@rambler.ru')
+            ->from('vktork@rambler.ru')
             ->to($to)
             ->subject($subject)
-            ->text($body);
+            ->text($body)
+            ->attachFromPath($attach,'data.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
 
         if($this->mailer->send($email))
         {

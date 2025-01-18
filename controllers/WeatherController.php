@@ -7,7 +7,6 @@ use app\models\Mail;
 use app\models\Weather;
 use app\models\WeatherPhotoImage;
 use app\models\WeatherSearch;
-// ошибка в namespace стоила мне часа мытарства!!!! АААА
 use app\helpers\ArrayHelper;
 use Yii;
 use yii\web\Controller;
