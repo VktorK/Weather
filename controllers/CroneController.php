@@ -11,23 +11,17 @@ class CroneController extends Controller
 {
     public function actionSendEmail()
     {
+        //Получаем массив данных
         $mails = Mail::find()->asArray()->all();
-
-
+        //Получаем таблицу
         $table = ParserService::toTable($mails);
-
+        //Получаем Excel файл
         $filePath = ParserService::toXl($mails);
 
+        // Заполняем данные для отправки письма
         $to = '4you.19885@mail.ru';
         $subject = 'Отчет о наличии писем в таблице';
         $mailer = new AppMailer();
-        $result = $mailer->sendEmail($to, $subject, $table, $filePath);
-        if($result)
-        {
-             unlink($filePath);
-             return 'Письмо отправлено';
-        }
-
-        return 'Письмо не отправлено';
+        $mailer->sendEmail($to, $subject, $table, $filePath);
     }
 }
