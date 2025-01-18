@@ -10,36 +10,21 @@ class ParserService
 {
     public static function toTable($array)
     {
-        $html = '<h1>Данные</h1>';
-        $html .= '<table class="table table-bordered">';
-        $html .= '<thead>';
-        $html .= '<tr>';
-        $html .= '<th>id</th>';
-        $html .= '<th>email</th>';
-        $html .= '<th>weather_id</th>';
-        $html .= '<th>is_send</th>';
-        $html .= '</tr>';
-        $html .= '</thead>';
-        $html .= '<tbody>';
+        $tableHtml = '<table border="1" style="border-collapse: collapse; width: 100%;">';
+        $tableHtml .= '<tr><th>id</th><th>email</th><th>weather_id</th><th>is_send</th></tr>'; // Заголовки таблицы
 
-        if (!empty($array)) {
-            foreach ($array as $item) {
-                $html .= '<tr>';
-                $html .= '<td>' . Html::encode($item['id']) . '</td>';
-                $html .= '<td>' . Html::encode($item['email']) . '</td>';
-                $html .= '<td>' . Html::encode($item['weather_id']) . '</td>';
-                $html .= '<td>' . Html::encode($item['is_send']) . '</td>';
-                $html .= '</tr>';
-            }
-        } else {
-            $html .= '<tr><td colspan="4">Нет данных для отображения.</td></tr>';
+        // Наполняем таблицу данными
+        foreach ($array as $row) {
+            $tableHtml .= '<tr>';
+            $tableHtml .= '<td>' . htmlspecialchars($row['id']) . '</td>';
+            $tableHtml .= '<td>' . htmlspecialchars($row['email']) . '</td>';
+            $tableHtml .= '<td>' . htmlspecialchars($row['weather_id']) . '</td>';
+            $tableHtml .= '<td>' . htmlspecialchars($row['is_send']) . '</td>';
+            $tableHtml .= '</tr>';
         }
 
-        $html .= '</tbody>';
-        $html .= '</table>';
-
-        // Возвращаем сгенерированный HTML
-        return $html;
+        $tableHtml .= '</table>';
+        return $tableHtml;
     }
 
 

@@ -21,7 +21,7 @@ class AppMailer
             ->from('vktork@rambler.ru')
             ->to($to)
             ->subject($subject)
-            ->text($body)
+            ->html($body)
             ->attachFromPath($attach,'data.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
 
