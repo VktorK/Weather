@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\CheckPhotoImage;
 use app\models\Mail;
+use app\models\Seller;
 use app\models\Weather;
 use app\models\WeatherPhotoImage;
 use app\models\WeatherSearch;
@@ -28,7 +29,11 @@ class WeatherController extends Controller
 
     public function actionIndex(): string
     {
-        $weathers = Weather::find()->where(['user_id' => Yii::$app->user->id])->all();
+        $weathers = Weather::find()->where(['user_id' => Yii::$app->user->id])->joinWith('seller')->all();
+        foreach ($weathers as $weather) {
+            echo $weather->seller->title . "\n";die();
+        }
+//        echo '<pre>';var_dump($weathers);echo '<pre>';die();
         $weathersJs = ArrayHelper::toJson($weathers);
         $searchModel = new WeatherSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -75,7 +80,6 @@ class WeatherController extends Controller
 
     public function actionCreate()
     {
-
         if(Yii::$app->user->isGuest)
         {
             return $this->redirect(['/site/login']);
@@ -109,11 +113,13 @@ class WeatherController extends Controller
                 $model->loadDefaultValues('user_id');
             }
         }
-
+        $seller = new Seller();
         return $this->render('create', [
             'model' => $model,
             'check_photo' => $check_photo,
-            'weather_photo'=>$weather_photo]);
+            'weather_photo'=>$weather_photo,
+            'seller' => $seller,
+        ]);
     }
 
     public function actionCreateDir($id)

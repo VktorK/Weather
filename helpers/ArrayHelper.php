@@ -5,11 +5,12 @@ namespace app\helpers;
 
 class ArrayHelper
 {
-    public static function toJson($weathers)
+    public static function toJson($arrays)
     {
-        $arrayRepresentations = array_map(function ($weather) {
-            return $weather->toArrayCustom();
-        }, $weathers);
+//        var_dump($arrays);die();
+        $arrayRepresentations = array_map(function ($model) {
+            return $model->toArrayCustom();
+        }, $arrays);
 
 // Преобразование в JSON все работает исправно
         return json_encode($arrayRepresentations, JSON_PRETTY_PRINT);

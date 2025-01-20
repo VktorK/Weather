@@ -17,8 +17,9 @@ class WeatherSearch extends Weather
     public function rules(): array
     {
         return [
-            [['title', 'price','seller','date_bying','date_end_warranty','created_at'], 'safe'],
-            [['title','seller'], 'string'],
+            [['title', 'price','seller_id','date_bying','date_end_warranty','created_at'], 'safe'],
+            [['title'], 'string'],
+            [['seller_id'], 'integer'],
             [['date_bying','date_end_warranty'],'date','format'=>'yyyy-MM-dd'],
             [['title'], 'string', 'max' => 100],
             [['check_photo','weather_photo'], 'file', 'extensions' => 'png, jpg, jpeg']
@@ -34,7 +35,7 @@ class WeatherSearch extends Weather
             'id' => 'ID',
             'title' => 'Описание товара(ов)',
             'price' => 'Цена',
-            'seller' => 'Продавец/Импортер',
+            'seller_id' => 'Идентификатор Продавца/Импортера',
             'weather' => 'Фотография товара',
             'check' => 'Фотография Чека',
             'date_bying' => 'Дата покупки',
@@ -66,7 +67,7 @@ class WeatherSearch extends Weather
 
         // Добавляем условия фильтрации
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'seller', $this->seller])
+            ->andFilterWhere(['like', 'seller_id', $this->seller_id])
             ->andFilterWhere(['like', 'date_end_warranty', $this->date_end_warranty])
             ->andFilterWhere(['like', 'created_at', $this->created_at]);
 

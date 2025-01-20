@@ -51,7 +51,7 @@ $this->title = 'Список покупок';
                         <tr class="weather-row" data-id="<?= $weather->id ?>">
                     <td><?= $weather->title ?></td>
                     <td><?= $weather->price ?></td>
-                    <td><?= $weather->seller ?></td>
+                    <td><?= $weather->seller_id ?></td>
                     <td><a href="<?= Url::toRoute(['weather/view','id'=>$weather->id]) ?>"><img src="<?= $weather->getWeatherImage() ?>" alt = 'Фото товара' style="width: 200px; height: 200px;"></a></td>
                     <td><a href="<?= Url::toRoute(['weather/view','id'=>$weather->id]) ?>"><img src="<?= $weather->getCheckImage()?>"  alt = 'Фото чека' style="width: 200px; height: 200px;"</a></td>
                     <td><?= is_null($weather->date_bying) ? 'Дата покупки не установлена' : Yii::$app->formatter->asDate($weather->date_bying, 'php:d-m-Y') ?></td>

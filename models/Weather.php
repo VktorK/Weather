@@ -16,7 +16,7 @@ use yii\db\Expression;
  * @property int $id
  * @property string $title
  * @property float $price
- * @property string $seller
+ * @property string $seller_id
  * @property string|null $weather_photo
  * @property string|null $check_photo
  * @property string|null $date_bying
@@ -30,8 +30,9 @@ class Weather extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['title', 'price','seller','date_bying'], 'required'],
-            [['title','seller'], 'string'],
+            [['title', 'price','date_bying'], 'required'],
+            [['title'], 'string'],
+            [['seller'], 'integer'],
             [['date_bying','date_end_warranty'],'date','format'=>'yyyy-MM-dd'],
             [['title'], 'string', 'max' => 100],
             [['check_photo','weather_photo'], 'file', 'extensions' => 'png, jpg, jpeg']
@@ -47,7 +48,7 @@ class Weather extends ActiveRecord
             'id' => 'ID',
             'title' => 'Описание товара(ов)',
             'price' => 'Цена',
-            'seller' => 'Продавец/Импортер',
+            'seller_id' => 'Идентификатор продавца/импортера',
             'weather' => 'Фотография товара',
             'check' => 'Фотография Чека',
             'date_bying' => 'Дата покупки',
@@ -62,7 +63,7 @@ class Weather extends ActiveRecord
             'id' => $this->id,
             'title' => $this->title,
             'price' => $this->price,
-            'seller' => $this->seller,
+            'seller_id' => $this->seller_id,
             'weather_photo' => $this->weather_photo,
             'check_photo' => $this->check_photo,
             'date_bying' => $this->date_bying,
@@ -148,4 +149,8 @@ class Weather extends ActiveRecord
         }
     }
 
+    public function getSeller()
+    {
+        return $this->hasOne(Seller::class, ['id' => 'seller_id']);
+    }
 }

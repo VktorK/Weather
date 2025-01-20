@@ -24,9 +24,8 @@ class m241220_183640_add_user_to_user_table extends Migration
      */
     public function safeDown()
     {
-        echo "m241220_183640_add_user_to_user_table cannot be reverted.\n";
-
-        return false;
+        $this->delete('{{%weather}}', ['user_id' => 1]);
+        $this->delete('{{%user}}', ['email' => 'user@user']);
     }
 
     /*

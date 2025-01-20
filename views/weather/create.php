@@ -6,6 +6,7 @@ use yii\helpers\Html;
 /** @var app\models\Weather $model */
 /** @var app\models\CheckPhotoImage $check_photo */
 /** @var app\models\WeatherPhotoImage $weather_photo */
+/** @var app\models\Seller $seller */
 
 $this->title = 'Create Weather';
 $this->params['breadcrumbs'][] = ['label' => 'Weather', 'url' => ['index']];
@@ -19,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'check_photo' => $check_photo,
         'weather_photo' => $weather_photo,
+        'seller' => $seller,
     ]) ?>
 
 </div>

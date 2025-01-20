@@ -28,7 +28,6 @@ class m241220_182047_create_user_table extends Migration
      */
     public function safeDown()
     {
-//        $this->dropTable('{{%weather}}');
         $this->dropTable('{{%user}}');
     }
 }
