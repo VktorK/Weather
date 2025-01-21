@@ -25,6 +25,13 @@ try {
 } catch (\yii\base\InvalidConfigException $e) {
     var_dump('error weather-modal.css');die();
 }
+$this->registerJs('
+    $(document).ready(function() {
+        $("#submit-button").on("click", function() {
+            $(this).prop("disabled", true);
+        });
+    });
+');
 
 ?>
 
@@ -59,8 +66,11 @@ try {
             ])->label('Поиск элементов'); ?>
             <div id="search-results" style="margin-top: 10px;"></div> <!-- Контейнер для отображения результатов поиска -->
         </div>
-        <?php ActiveForm::end(); ?>
 
+        <?php ActiveForm::end(); ?>
+            <div class="form-group mt-4">
+                <?= Html::submitButton('Create', ['id' => 'submit-button','class' => 'btn btn-success']) ?>
+            </div>
         </div>
 <script>
     const posts = <?php echo $postsJs;?>;
