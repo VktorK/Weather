@@ -153,7 +153,7 @@ class SellerController extends Controller
         ]);
     }
 
-    public function actionSearchSellers()
+    public function actionSearchSellers(): array
     {
         if(!Yii::$app->request->isAjax){
             throw new NotFoundHttpException('The requested page does not exist.');

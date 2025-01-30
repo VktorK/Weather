@@ -2,6 +2,7 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$product = require __DIR__ . '/product.php';
 
 $config = [
     'id' => 'basic',
@@ -12,6 +13,20 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+//        'weather' => [
+//            'class' => 'yii\db\Connection',
+//            'dsn' => 'mysql:host=127.0.0.1;dbname=weather;port=3306', // DSN для первой базы данных
+//            'username' => 'root', // Имя пользователя
+//            'password' => 'Zghjuhfvbcn011', // Пароль
+//            'charset' => 'utf8mb4',
+//        ],
+//        'Product' => [
+//            'class' => 'yii\db\Connection',
+//            'dsn' => 'mysql:host=127.0.0.1;dbname=Product;port=3306', // DSN для второй базы данных
+//            'username' => 'root', // Имя пользователя
+//            'password' => 'Zghjuhfvbcn011', // Пароль
+//            'charset' => 'utf8mb4',
+//        ],
 //        'mailer' => [
 //            'class' => \yii\symfonymailer\Mailer::class,
 //            'transport' => [
@@ -59,6 +74,7 @@ $config = [
             ],
         ],
         'db' => $db,
+        'product' => $product,
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
