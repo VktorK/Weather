@@ -171,4 +171,9 @@ class WeatherController extends Controller
                     'weather' => $weather
                 ]);
             }
+
+    public function actionTest()
+    {
+        var_dump('1122');die;
+    }
 }

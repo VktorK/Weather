@@ -13,6 +13,14 @@ use yii\widgets\ActiveForm;
 /** @var app\models\CheckPhotoImage $check_photo */
 /** @var app\models\WeatherPhotoImage $weather_photo */
 /** @var yii\widgets\ActiveForm $form */
+
+$this->registerJs('
+    $(document).ready(function() {
+        $("#submit-button").on("click", function() {
+            $(this).prop("disabled", true);
+        });
+    });
+');
 ?>
 
 <div class="articles-form">
@@ -59,7 +67,7 @@ use yii\widgets\ActiveForm;
 
 
     <div class="form-group mt-4">
-        <?= Html::submitButton('Create', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Create', ['id'=>'submit-button','class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
