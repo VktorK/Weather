@@ -9,6 +9,8 @@ use app\models\Weather;
 use app\models\WeatherPhotoImage;
 use app\models\WeatherSearch;
 use app\helpers\ArrayHelper;
+use PHPUnit\Exception;
+use TelegramBot\Api\BotApi;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -18,6 +20,48 @@ use yii\web\UploadedFile;
 class WeatherController extends Controller
 {
 
+    public function actionGetChatId()
+    {
+        $token = '7822712623:AAH32zSizy5HzPB-eIuRIYg-P_dbmNTpYKU'; // Замените на токен вашего бота
+        $result = [];
+        try {
+            $bot = new BotApi($token);
+
+            $updates = $bot->getUpdates();
+
+
+            foreach ($updates as $update) {
+                $result['id'] = $update->getMessage()->getChat()->getId();
+                $result['userName'] = $update->getMessage()->getChat()->getUsername();
+            }
+
+        } catch (\Exception $e) {
+            echo 'Error' . $e->getMessage();
+        }
+        if(!empty($result))
+        {
+            try {
+                $this->actionSendMessageTg($token,$result);
+                echo 'Сообщение отправлено';
+            } catch (\Exception $e)
+            {
+                echo 'Сбой отправки'. $e->getMessage();
+            }
+        }
+    }
+
+    protected function actionSendMessageTg($token,array $result = [])
+    {
+        $chatId = $result['id'];
+        $message = 'Привет ' . $result['userName'] . '! Это сообщение отправлено из моего приложения на Yii2.';
+
+        try {
+            $bot = new BotApi($token);
+            $bot->sendMessage($chatId, $message);
+        } catch (\Exception $e) {
+
+        }
+    }
 
 //    public function actionIndex()
 //    {

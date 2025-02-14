@@ -1,5 +1,6 @@
 <?php
 
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 $product = require __DIR__ . '/product.php';
@@ -43,7 +44,6 @@ $config = [
 //            // for the mailer to send real emails.
 //            'useFileTransport' => false,
 //        ],
-
         'formatter' => [
             'class' => 'yii\i18n\Formatter',
             'dateFormat' => 'php:d-m-Y',
@@ -81,8 +81,11 @@ $config = [
             'rules' => [
             ],
         ],
+        'telega' => [
+            'class' => \TelegramBot\Api\BotApi::class,
+            'token' => '7822712623:AAH32zSizy5HzPB-eIuRIYg-P_dbmNTpYKU',
+        ]
     ],
-
     'params' => $params,
 ];
 
