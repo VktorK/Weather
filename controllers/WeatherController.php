@@ -22,7 +22,7 @@ class WeatherController extends Controller
 
     public function actionGetChatId()
     {
-        $token = '7822712623:AAH32zSizy5HzPB-eIuRIYg-P_dbmNTpYKU'; // Замените на токен вашего бота
+        $token = 'sone token';
         $result = [];
         try {
             $bot = new BotApi($token);
