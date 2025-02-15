@@ -31,8 +31,10 @@ class WeatherController extends Controller
 
 
             foreach ($updates as $update) {
-                $result['id'] = $update->getMessage()->getChat()->getId();
-                $result['userName'] = $update->getMessage()->getChat()->getUsername();
+                $result[] = [
+                    'id' => $update->getMessage()->getChat()->getId(),
+                    'userName' => $update->getMessage()->getChat()->getUsername()
+                ];
             }
 
         } catch (\Exception $e) {
@@ -40,12 +42,13 @@ class WeatherController extends Controller
         }
         if(!empty($result))
         {
-            try {
-                $this->actionSendMessageTg($token,$result);
-                echo 'Сообщение отправлено';
-            } catch (\Exception $e)
-            {
-                echo 'Сбой отправки'. $e->getMessage();
+            foreach ($result as $item) {
+                try {
+                    $this->actionSendMessageTg($token, $item);
+                    echo 'Сообщение отправлено';
+                } catch (\Exception $e) {
+                    echo 'Сбой отправки' . $e->getMessage();
+                }
             }
         }
     }
