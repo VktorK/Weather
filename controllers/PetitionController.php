@@ -17,76 +17,12 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
 
-class WeatherController extends Controller
+class PetitionController extends Controller
 {
-
-    public function actionGetChatId()
-    {
-        $token = 'some token';
-        $result = [];
-        try {
-            $bot = new BotApi($token);
-
-            $updates = $bot->getUpdates();
-
-
-            foreach ($updates as $update) {
-                $result[] = [
-                    'id' => $update->getMessage()->getChat()->getId(),
-                    'userName' => $update->getMessage()->getChat()->getUsername()
-                ];
-            }
-
-        } catch (\Exception $e) {
-            echo 'Error' . $e->getMessage();
-        }
-        if(!empty($result))
-        {
-            foreach ($result as $item) {
-                try {
-                    $this->actionSendMessageTg($token, $item);
-                    echo 'Сообщение отправлено';
-                } catch (\Exception $e) {
-                    echo 'Сбой отправки' . $e->getMessage();
-                }
-            }
-        }
-    }
-
-    protected function actionSendMessageTg($token,array $result = [])
-    {
-        $chatId = $result['id'];
-        $message = 'Привет ' . $result['userName'] . '! Это сообщение отправлено из моего приложения на Yii2.';
-
-        try {
-            $bot = new BotApi($token);
-            $bot->sendMessage($chatId, $message);
-        } catch (\Exception $e) {
-
-        }
-    }
-
-//    public function actionIndex()
-//    {
-//
-//        $weathers = Weather::find()->where(['user_id' => Yii::$app->user->id])->all();
-//
-//        return $this->render('index', ['weathers'=> $weathers]);
-//    }
 
     public function actionIndex(): string
     {
-        $weathers = Weather::find()->where(['user_id' => Yii::$app->user->id])->all();
-        $weathersJs = ArrayHelper::toJson($weathers);
-        $searchModel = new WeatherSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'weathers'=>$weathers,
-            'weathersJs' => $weathersJs
-        ]);
+        return '1111111';
     }
 
     public function actionUpdate($id)
@@ -220,6 +156,21 @@ class WeatherController extends Controller
     public function actionTest()
     {
         var_dump('1122');die;
+    }
+
+    public function actionPetition()
+    {
+        $weathers = Weather::find()->where(['user_id' => Yii::$app->user->id])->all();
+        $weathersJs = ArrayHelper::toJson($weathers);
+        $searchModel = new WeatherSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'weathers'=>$weathers,
+            'weathersJs' => $weathersJs
+        ]);
     }
 
 }

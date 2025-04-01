@@ -20,6 +20,12 @@ class m241220_182058_create_seller_table extends Migration
             'updated_at'=> $this->timestamp(),
             'created_at' => $this->timestamp(),
         ]);
+
+        $this->batchInsert('{{%seller}}', ['title', 'juri_address', 'ogrn'],
+            [
+                ['ООО "Купишуз"','г.Москва','345345345345'],
+                ['АО "РТК"','г.Сызрань','342342675678634'],
+                ]);
     }
 
     /**

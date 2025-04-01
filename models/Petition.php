@@ -24,7 +24,7 @@ use yii\db\Expression;
  * @property int|null $user_id
  */
 
-class Weather extends ActiveRecord
+class Petition extends ActiveRecord
 {
 
     public function rules(): array
@@ -148,8 +148,8 @@ class Weather extends ActiveRecord
         }
     }
 
-    public function getSeller(): \yii\db\ActiveQuery
+    public function getUsers(): \yii\db\ActiveQuery
     {
-        return $this->hasOne(Seller::class, ['id' => 'seller_id']);
+        return $this->hasMany(User::class, ['id' => 'user_id']);
     }
 }

@@ -14,13 +14,6 @@ use yii\widgets\ActiveForm;
 /** @var app\models\WeatherPhotoImage $weather_photo */
 /** @var yii\widgets\ActiveForm $form */
 
-$this->registerJs('
-    $(document).ready(function() {
-        $("#submit-button").on("click", function() {
-            $(this).prop("disabled", true);
-        });
-    });
-');
 ?>
 
 <div class="articles-form">
@@ -35,7 +28,6 @@ $this->registerJs('
         'options' => [
             'placeholder' => 'Выберите элементы...',
             'class' => 'cd-fid-region',
-//            'multiple' => true,
         ],
         'pluginOptions' => [
             'allowClear' => true,
@@ -43,7 +35,7 @@ $this->registerJs('
             'ajax' => [
                 'url' => Url::to(['seller/search-sellers']), //
                 'dataType' => 'json',
-                'data' => new JsExpression('function(params) { return {q: params.term}; }'), // Параметр запроса для передачи
+                'data' => new JsExpression('function(params) { return {q: params.term}; }'),
                 'processResults' => new JsExpression('function(data) {
                 return {
                     results: $.map(data, function(item) {

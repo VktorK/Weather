@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Seller;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -30,10 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'title',
             'price',
-            'seller',
+            [
+                'attribute' => 'seller_id',
+                'value' => function ($model) {
+                    return $model->seller->title ?? 'Неизвестный продавец';
+                },
+            ],
             'date_bying',
             'date_end_warranty',
         ],
     ]) ?>
+
 
 </div>
